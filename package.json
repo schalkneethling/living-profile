@@ -1,0 +1,49 @@
+{
+  "name": "living-profile",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "tsc && vp build",
+    "preview": "vp preview",
+    "prepare": "vp config",
+    "lint": "stylelint \"**/*.{css,scss}\"",
+    "lint:fix": "stylelint \"**/*.{css,scss}\" --fix",
+    "lint:html": "html-validate \"**/*.html\"",
+    "repo:controls:check": "node scripts/repository-controls.mjs",
+    "repo:controls:apply": "node scripts/repository-controls.mjs --apply",
+    "tests:e2e": "playwright test",
+    "quality": "npm run lint && npm run lint:html"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@schalkneethling/stylelint-plugin-css-property-type-validator": "^0.1.0-beta.1",
+    "@types/node": "^24.19.2",
+    "html-validate": "^11.16.2",
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.1",
+    "stylelint-plugin-logical-css": "^2.1.0",
+    "stylelint-plugin-use-baseline": "^1.4.6",
+    "typescript": "~6.0.2",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.1.0",
+    "vite-plus": "1.1.0"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.1.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": "12.2.0",
+      "onFail": "download"
+    }
+  },
+  "engines": {
+    "node": "^22.18.0 || ^24.11.0 || >=26.0.0"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
+  }
+}
