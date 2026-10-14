@@ -28,6 +28,8 @@ jobs:
 
   playwright:
     needs: quality
+    # The template repository has no profile card to test; repositories created from it do.
+    if: ${{ !github.event.repository.is_template }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
