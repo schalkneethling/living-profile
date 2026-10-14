@@ -12,7 +12,7 @@ Every push to `main` builds the site and deploys it to GitHub Pages. The first d
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
 3. Re-run the failed **Deploy to GitHub Pages** workflow from the **Actions** tab, or push to `main`.
 
-The deploy workflow does not run in the template repository itself, because the template has no Pages site.
+The deploy workflow does not run in the template repository itself, because the template has no Pages site. The Playwright tests are skipped there too, because they test a profile card that only repositories created from the template build.
 
 ### Update the repository controls policy
 

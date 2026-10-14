@@ -16,21 +16,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      # Installs Node, the npm version devEngines.packageManager requires, and the dependencies
+      - uses: voidzero-dev/setup-vp@v1.21.1
         with:
           node-version-file: package.json
-      - run: npm ci
+          cache: true
+          # Fails instead of updating the lockfile, like npm ci
+          run-install: |
+            args: ['--frozen-lockfile']
       - run: npm run quality
 
   playwright:
     needs: quality
+    # The template repository has no profile card to test; repositories created from it do.
+    if: ${{ !github.event.repository.is_template }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      # Installs Node, the npm version devEngines.packageManager requires, and the dependencies
+      - uses: voidzero-dev/setup-vp@v1.21.1
         with:
           node-version-file: package.json
-      - run: npm ci
+          cache: true
+          # Fails instead of updating the lockfile, like npm ci
+          run-install: |
+            args: ['--frozen-lockfile']
       - run: npx playwright install --with-deps chromium
       - run: npm run tests:e2e
       - uses: actions/upload-artifact@v7
