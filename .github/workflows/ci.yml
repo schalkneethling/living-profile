@@ -16,14 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      # Installs Node, the npm version devEngines.packageManager requires, and the dependencies
+      - uses: voidzero-dev/setup-vp@v1.21.1
         with:
           node-version-file: package.json
-          # Caching runs npm before the step below installs the npm version devEngines requires
-          package-manager-cache: false
-      # The npm bundled with Node may not match devEngines.packageManager, which makes npm fail
-      - run: npm install --global "npm@$(node -p "require('./package.json').devEngines.packageManager.version")"
-      - run: npm ci
+          cache: true
+          # Fails instead of updating the lockfile, like npm ci
+          run-install: |
+            args: ['--frozen-lockfile']
       - run: npm run quality
 
   playwright:
@@ -31,14 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      # Installs Node, the npm version devEngines.packageManager requires, and the dependencies
+      - uses: voidzero-dev/setup-vp@v1.21.1
         with:
           node-version-file: package.json
-          # Caching runs npm before the step below installs the npm version devEngines requires
-          package-manager-cache: false
-      # The npm bundled with Node may not match devEngines.packageManager, which makes npm fail
-      - run: npm install --global "npm@$(node -p "require('./package.json').devEngines.packageManager.version")"
-      - run: npm ci
+          cache: true
+          # Fails instead of updating the lockfile, like npm ci
+          run-install: |
+            args: ['--frozen-lockfile']
       - run: npx playwright install --with-deps chromium
       - run: npm run tests:e2e
       - uses: actions/upload-artifact@v7
