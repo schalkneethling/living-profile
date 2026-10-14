@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version-file: package.json
+      # The npm bundled with Node may not match devEngines.packageManager, which makes npm ci fail
+      - run: npm install --global "npm@$(node -p "require('./package.json').devEngines.packageManager.version")"
       - run: npm ci
       - run: npm run quality
 
@@ -30,6 +32,8 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version-file: package.json
+      # The npm bundled with Node may not match devEngines.packageManager, which makes npm ci fail
+      - run: npm install --global "npm@$(node -p "require('./package.json').devEngines.packageManager.version")"
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run tests:e2e
